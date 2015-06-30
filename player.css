@@ -1,0 +1,9 @@
+html {background-color: #EEEEEE; font-family: arial, verdana, helvetica, sans-serif;}
+hr {width: 100%; height: 5px; border-color: #0000FF;background-color:#AAAAFF ; margin-top: 1px; }
+img {border :0px }
+p {color:#303030; text-align: justify; } 
+h1,h2,h3,h4 {color:#404040; }
+a { color: #000055; text-decoration: none; }
+a:visited { color: #000055; } 
+a:hover { color: #0000FF; background-color: #CCCCFF}
+table { background-color: #DDDDDD}

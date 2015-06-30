@@ -1,0 +1,88 @@
+Présentation
+
+Ce petit programme est une interface PHP pour une playlist musicale. Elle permet
+de piloter cette dernière depuis un ordinateur ou un PDA possédant un navigateur
+Web et une liaison réseau vers celle ci. Elle se compose d'un ensemble de pages
+PHP et d'un script en Python. Les pages en PHP constituent l'interface 
+utilisateur, le script s'occupe de lire les fichiers audios en tache de fond. 
+
+Ben pourquoi?
+
+Il existe aujourd'huis une pléthore de logiciels dédiés au pilotage de ogg/mp3box,
+utilisant des télécommandes domestiques, des afficheurs LCD ou une interface 
+simplifiée s'affichant sur un poste de télévision, mais je n'en ai trouvé aucune 
+qui soit pilotable simplement depuis un PDA ou un ordinateur portable distant. 
+C'est pour pouvoir piloter ma ogg/mp3box quand je travaile depuis mon ordinateur 
+principal ou depuis mon ordinateur portable que j'ai créé ces scripts. Il faut 
+aussi noter qu'au début du projet, je ne connaissais pas Music Player Daemon, qui 
+propose peut être une solution plus élégante que la mienne pour piloter une mp3 
+box depuis le réseau. Par contre l'avantage de ce programme est qu'il n'est pas 
+limité par certain format, il suffit d'avoir un lecteur en ligne de commande pour 
+le format désiré pour pouvoir ensuite le lire.
+
+Installation
+
+Il faut un serveur Web supportant PHP version 4, une base MySQL, Python, la 
+librairie MySQLdb et plusieurs lecteurs audios. La présence de bash, d'aumix  et
+ de lsof est aussi nécéssaire.
+
+Si bash n'est pas le shell par défaut du système , il faut modifier les fichiers 
+.sh en conséquence.
+
+Le fichier config.inc.php contient les paramètres de configurations pour la partie PHP:
+
+    * $repertoire_playlist doit pointer vers le répertoire contenant le fichier de 
+    playlist.
+    * $repertoire_shell doit pointer vers le répertoire contenant les fichiers .php,
+    .sh et .py.
+    * $repertoire_fichiers doit pointer vers le répertoire racine contenant 
+    l'arborescence des fichiers audios.
+    * $db_host contient le nom de la machine faisant tourner MySQL
+    * $db_name contient le nom de la base MySQL
+    * $db_utilisateur contient le nom d'utilisateur de la base MySQL
+    * $db_passwd contient le mot de passe de $db_utilisateur
+
+Le fichier config.py contient les paramètres de configuration pour le script Python.
+
+Il reprend certaine valeur de config.inc.php:
+
+    * db_user contient $db_utilsateur
+    * db_passwd contient $db_passwd
+    * db_name contient $db_name
+    * db_host contient $dbhost
+    * rep_script contient $repertoire_shell
+
+Une fois ces fichiers renseignés, il faut créer la base de données à l'aide du script 
+sql base.sql, soit en passant par une interface d'administration du type phpmysql, soit 
+à partir de la ligne de commmande:
+
+mysql -u utilisateur -p -h host basededonnée <base.sql
+
+Il faut ensuite renseigner la table lecteur avec le nom et le chemin des lecteurs audios 
+et les extensions des fichiers qui leurs sont associés.
+Par exemple:
+
++------------------------+-----------+
+| commande               | extension |
++------------------------+-----------+
+| /usr/bin/ogg123        | ogg       |
+| /usr/bin/mpg123        | mp3       |
+| /usr/local/bin/mplayer | wma       |
+| /usr/bin/play          | wav       |
+| /usr/local/bin/xmp     | s3m       |
+| /usr/local/bin/xmp     | mod       |
+| /usr/local/bin/xmp     | med       |
+| /usr/local/bin/xmp     | xm        |
+| /usr/local/bin/xmp     | it        |
+| /usr/local/bin/xmp     | 669       |
+| /usr/local/bin/xmp     | mtm       |
++------------------------+-----------+
+
+Si la lecture ne fonctionne pas, il faut vérifier que l'utilisateur du serveur web 
+possède les droits pour executer les lecteurs audios. De même, vérifier qu"il posséde 
+les droits d'écritures sur les périphériques audio (en général /dev/dsp et /dev/mixer).
+
+Contact:
+
+Site web: http://neriki.free.fr/projets.php
+Adresse email: neriki@free.fr
